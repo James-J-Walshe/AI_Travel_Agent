@@ -1,5 +1,5 @@
-from .company_service import *
-from .traveller_service import *
-from .policy_service import *
-from .booking_service import *
+from . import company_service
+from . import traveller_service
+from . import policy_service
+from . import booking_service
 
