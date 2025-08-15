@@ -1,11 +1,11 @@
 from flask import Flask, request, jsonify
 from src.config import PORT
 
-# Import each service module directly
-from .services import company_service
-from .services import traveller_service
-from .services import policy_service
-from .services import booking_service
+# Direct function imports (avoids circular imports entirely)
+from .services.company_service import set_company_policy, get_company_policy
+from .services.traveller_service import set_traveller_preferences, get_traveller_preferences
+from .services.policy_service import search_matching_options
+from .services.booking_service import book_trip
 
 app = Flask(__name__)
 
