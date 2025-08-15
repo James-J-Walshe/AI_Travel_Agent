@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify
-from src.config import PORT
-from src.services import company_service, traveller_service, policy_service, booking_service
+from .src.config import PORT
+from .src.services import company_service, traveller_service, policy_service, booking_service
 
 app = Flask(__name__)
 
