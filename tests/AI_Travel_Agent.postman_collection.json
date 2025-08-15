@@ -1,0 +1,71 @@
+{
+  "info": {
+    "name": "AI Travel Booking Agent",
+    "_postman_id": "12345678-90ab-cdef-1234-567890abcdef",
+    "description": "Collection to test AI Travel Booking Agent API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {"key": "base_url", "value": "http://127.0.0.1:5000"},
+    {"key": "company_name", "value": "Example Corp"},
+    {"key": "company_policy", "value": "No weekend travel"},
+    {"key": "traveller_name", "value": "Jamie"},
+    {"key": "seat_pref", "value": "aisle"},
+    {"key": "option_id", "value": "2"},
+    {"key": "booking_notes", "value": "please add seat selection"}
+  ],
+  "item": [
+    {
+      "name": "Health Check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{base_url}}/"
+      }
+    },
+    {
+      "name": "Set Company Policy",
+      "request": {
+        "method": "POST",
+        "header": [{"key": "Content-Type", "value": "application/json"}],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"{{company_name}}\",\n  \"policy\": \"{{company_policy}}\"\n}"
+        },
+        "url": "{{base_url}}/company"
+      }
+    },
+    {
+      "name": "Set Traveller Preferences",
+      "request": {
+        "method": "POST",
+        "header": [{"key": "Content-Type", "value": "application/json"}],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"{{traveller_name}}\",\n  \"preferences\": {\"seat\": \"{{seat_pref}}\"}\n}"
+        },
+        "url": "{{base_url}}/traveller"
+      }
+    },
+    {
+      "name": "Search Travel Options",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{base_url}}/search"
+      }
+    },
+    {
+      "name": "Book Trip",
+      "request": {
+        "method": "POST",
+        "header": [{"key": "Content-Type", "value": "application/json"}],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"option_id\": {{option_id}},\n  \"notes\": \"{{booking_notes}}\"\n}"
+        },
+        "url": "{{base_url}}/book"
+      }
+    }
+  ]
+}
