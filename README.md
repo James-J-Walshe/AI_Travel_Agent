@@ -27,7 +27,6 @@ A minimal Flask backend scaffold for an AI-powered travel booking agent that col
 
 ## Quick start
 
-```bash
 python -m venv venv
 # Windows PowerShell:
 .\venv\Scripts\Activate.ps1
