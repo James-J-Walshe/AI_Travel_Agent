@@ -1,23 +1,35 @@
 from flask import Flask, request, jsonify
+from config import PORT
+from services import company_service, traveller_service, policy_service, booking_service
 
 app = Flask(__name__)
 
-@app.route('/company', methods=['POST'])
-def company_input():
-    data = request.json
-    # Store company policy (placeholder)
-    return jsonify({"message": "Company policy stored", "data": data})
+@app.route("/", methods=["GET"])
+def health():
+    return jsonify({"status": "ok", "service": "ai-travel-booking-agent"})
 
-@app.route('/traveller', methods=['POST'])
-def traveller_input():
-    data = request.json
-    # Store traveller preferences (placeholder)
-    return jsonify({"message": "Traveller preferences stored", "data": data})
+@app.route("/company", methods=["POST"])
+def company():
+    data = request.get_json(force=True, silent=False) or {}
+    company_service.set_company_policy(data)
+    return jsonify({"message": "Company policy saved.", "policy": company_service.get_company_policy()})
 
-@app.route('/search', methods=['GET'])
-def search_travel():
-    # Placeholder for AI + API search
-    return jsonify({"message": "Search results placeholder"})
+@app.route("/traveller", methods=["POST"])
+def traveller():
+    data = request.get_json(force=True, silent=False) or {}
+    traveller_service.set_traveller_preferences(data)
+    return jsonify({"message": "Traveller preferences saved.", "traveller": traveller_service.get_traveller_preferences()})
 
-if __name__ == '__main__':
-    app.run(debug=True)
+@app.route("/search", methods=["GET"])
+def search():
+    results = policy_service.search_matching_options()
+    return jsonify({"count": len(results), "results": results})
+
+@app.route("/book", methods=["POST"])
+def book():
+    payload = request.get_json(force=True, silent=False) or {}
+    confirmation = booking_service.book_trip(payload)
+    return jsonify({"message": "Booking confirmed", "details": confirmation})
+
+if __name__ == "__main__":
+    app.run(debug=True, port=PORT)
