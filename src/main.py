@@ -1,5 +1,7 @@
 from flask import Flask, request, jsonify
 from src.config import PORT
+
+# Import each service module directly
 from .services import company_service
 from .services import traveller_service
 from .services import policy_service
